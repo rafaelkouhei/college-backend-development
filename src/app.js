@@ -1,25 +1,26 @@
-const express = require('express');
+// server config
+require("dotenv").config();
+const express = require("express");
 const app = express();
-const PORTA = 3000;
-
-// Middleware para interpretar JSON
+const PORT = 3000;
 app.use(express.json());
 
-// Importamos o nosso arquivo de rotas
-const produtoRoutes = require('./routes/produtoRoutes');
-const usuarioRoutes = require('./routes/usuarioRoutes');
+const recipeRoutes = require("./routes/recipes");
+const userRoutes = require("./routes/users");
 
-// Usamos o roteador na nossa aplicação, definindo um prefixo
-// Todas as rotas em 'produtoRoutes' terão '/api/produtos' antes
-app.use('/api/produtos', produtoRoutes);
-app.use('/api/usuarios', usuarioRoutes);
+app.use("/api/recipes", recipeRoutes);
+app.use("/api/users", userRoutes);
 
-// Rota de teste
-app.get('/', (req, res) => {
-  res.send('API de Produtos e Usuários funcionando!');
+// root route
+app.get("/", (req, res) => {
+    res.send("Welcome to my Server!");
 });
 
-// Inicialização do servidor
-app.listen(PORTA, () => {
-  console.log(`Servidor rodando em http://localhost:${PORTA}`);
+// about route
+app.get("/about", (req, res) => {
+    res.send("GUITAR CROSS OVERFACT!!!<br>Equipe composta por: Cristoffer, Gustavo, Marcos, Rafael e Victor");
+});
+
+app.listen(PORT, () => {
+    console.log(`Server listening port ${PORT}`);
 });
